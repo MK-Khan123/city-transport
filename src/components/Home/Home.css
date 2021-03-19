@@ -1,0 +1,13 @@
+.cardStyle {
+    height: 100%;
+    width: 100%;
+    padding: 5%;
+    text-align: center;
+    color: black;
+    border-radius: 10px;
+}
+
+.cardStyle img {
+    max-height: 160px;
+    object-fit: contain;
+}

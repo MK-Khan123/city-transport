@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "ride": "Motorcycle",
+        "img": "https://img.freepik.com/free-vector/red-color-motorcycle-isolated-white-background_1284-38725.jpg?size=626&ext=jpg",
+        "price": 200
+    },
+    {
+        "id": 2,
+        "ride": "Car",
+        "img": "https://i.pinimg.com/736x/ef/84/c4/ef84c47e2aefa37f5a28ddc17c28038c.jpg",
+        "price": 300
+    },
+    {
+        "id": 3,
+        "ride": "Bus",
+        "img": "https://image.freepik.com/free-vector/red-bus-illustration_173474-60.jpg",
+        "price": 100
+    },
+    {
+        "id": 4,
+        "ride": "Train",
+        "img": "https://st.depositphotos.com/1898933/1686/v/600/depositphotos_16864033-stock-illustration-the-ancient-transportation.jpg",
+        "price": 50
+    }
+]
