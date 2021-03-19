@@ -7,6 +7,7 @@ import {
 import './App.css';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
+import Login from './components/Login/Login';
 
 export const UserContext = createContext();
 
@@ -17,8 +18,11 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route>
+            <Route path='/home'>
               <Home />
+            </Route>
+            <Route path='/login'>
+              <Login />
             </Route>
           </Switch>
         </Router>
