@@ -5,9 +5,11 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
+import DestinationDetails from './components/DestinationDetails/DestinationDetails';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
+import NoMatch from './components/NoMatch/NoMatch';
 
 export const UserContext = createContext();
 
@@ -23,6 +25,15 @@ function App() {
             </Route>
             <Route path='/login'>
               <Login />
+            </Route>
+            <Route path='/destination'>
+              <DestinationDetails />
+            </Route>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='*'>
+              <NoMatch />
             </Route>
           </Switch>
         </Router>
