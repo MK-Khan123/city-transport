@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,13 +10,16 @@ import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import NoMatch from './components/NoMatch/NoMatch';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export const UserContext = createContext();
 
 function App() {
+  
+  const [loggedInUser, setLoggedInUser] = useState({});
   return (
     <div className='container'>
-      <UserContext.Provider>
+      <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
         <Router>
           <Header />
           <Switch>
@@ -26,9 +29,9 @@ function App() {
             <Route path='/login'>
               <Login />
             </Route>
-            <Route path='/destination'>
+            <PrivateRoute path='/destination/:ride'>
               <DestinationDetails />
-            </Route>
+            </PrivateRoute>
             <Route exact path='/'>
               <Home />
             </Route>

@@ -19,3 +19,9 @@
 .error {
     color: red;
 }
+
+.toggleLoginStyle {
+    text-decoration: underline;
+    color: darkgreen;
+    cursor: pointer;
+}

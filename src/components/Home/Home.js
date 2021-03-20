@@ -22,7 +22,7 @@ const Home = () => {
 
                         const { ride, img, id } = data;
                         return (
-                            <Link key={id} style={{ textDecoration: 'none' }} to="/destination">
+                            <Link key={id} style={{ textDecoration: 'none' }} to={"/destination/" + ride}>
                                 <div className="col">
                                     <div className="card cardStyle">
                                         <img src={img} className="card-img-top" alt="..." />
