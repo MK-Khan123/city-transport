@@ -1,16 +1,3 @@
-.inputField {
-    margin: 30px 100px;
-}
-
-.inputField input {
-    display: block;
-    margin-top: 30px;
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 300px;
-}
-
 .inputForm {
     padding: 40px;
     border: 1px solid black;

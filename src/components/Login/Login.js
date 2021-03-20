@@ -17,7 +17,8 @@ const Login = () => {
         signedInUser: false,
         displayName: '',
         email: '',
-        password: ''
+        password: '',
+        error: ''
     });
 
     const [newUser, setNewUser] = useState(true);
@@ -25,6 +26,7 @@ const Login = () => {
     const history = useHistory();
     const location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
+    console.log(loggedInUser);
 
     const googleSignIn = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -98,6 +100,7 @@ const Login = () => {
                     // Signed in
                     const newUserInfo = { ...user };
                     newUserInfo.signedInUser = true;
+                    newUserInfo.error = '';
                     setUser(newUserInfo);
                     updateUserName(user.displayName);
                     setLoggedInUser(newUserInfo);
@@ -119,21 +122,22 @@ const Login = () => {
             firebase.auth().signInWithEmailAndPassword(user.email, user.password)
                 .then((res) => {
                     // Signed in
-                    const newUserInfo = { ...user };
-                    newUserInfo.signedInUser = true;
-                    setUser(newUserInfo);
-                    setLoggedInUser(newUserInfo);
+                    const oldUserData = {...user};
+                    oldUserData.error = ''; //For removing the error message when the user provides correct information for log in.
+                    setUser(oldUserData);
+                    const oldUserInfo = res.user;
+                    oldUserInfo.signedInUser = true;
+                    setLoggedInUser(oldUserInfo);
                     history.replace(from);
                     console.log('user info', res.user);
                     // ...
                 })
                 .catch((error) => {
-                    const newUserInfo = { ...user };
-                    newUserInfo.signedInUser = false;
-                    setUser(newUserInfo);
-                    const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log(errorCode, errorMessage);
+                    const oldUserInfo = { ...user };
+                    oldUserInfo.signedInUser = false;
+                    oldUserInfo.error = errorMessage;
+                    setUser(oldUserInfo);
                 });
         }
         e.preventDefault();
@@ -181,6 +185,8 @@ const Login = () => {
 
                     {newUser ? <input type="submit" className="btn btn-primary" value='Create an account' /> : <input type="submit" className="btn btn-primary" value='Login' />}
 
+                    {newUser || <p style={{textAlign:'center'}} className='error'>{user.error}</p>} {/* Providing error validation if the user email and password do not match during login sessions*/}
+
                     <div style={{ textAlign: 'center' }}>
                         {newUser ?
                             <div>
@@ -193,11 +199,7 @@ const Login = () => {
                             </div>
                         }
                     </div>
-                    {/* <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" />
-                        <label className="form-check-label" >Check me out</label>
-                    </div>
-                    <button type="submit" className="btn btn-primary">Submit</button> */}
+                    
                 </form>
 
                 <div className="d-grid gap-2 col-6 mx-auto">
