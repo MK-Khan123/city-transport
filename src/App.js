@@ -5,6 +5,8 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
+import Blog from './components/Blog/Blog';
+import Contact from './components/Contact/Contact';
 import DestinationDetails from './components/DestinationDetails/DestinationDetails';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
@@ -28,6 +30,12 @@ function App() {
             </Route>
             <Route path='/login'>
               <Login />
+            </Route>
+            <Route path='/blog'>
+              <Blog />
+            </Route>
+            <Route path='/contact'>
+              <Contact />
             </Route>
             <PrivateRoute path='/destination/:rideType'>
               <DestinationDetails />

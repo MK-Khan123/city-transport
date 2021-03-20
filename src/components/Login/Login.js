@@ -40,14 +40,8 @@ const Login = () => {
                 history.replace(from);
             }).catch((error) => {
                 // Handle Errors here.
-                const errorCode = error.code;
                 const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                const credential = error.credential;
-                console.log(errorCode, errorMessage, email, credential);
-                // ...
+                console.log(errorMessage);
             });
     }
 
@@ -65,14 +59,8 @@ const Login = () => {
             })
             .catch((error) => {
                 // Handle Errors here.
-                const errorCode = error.code;
                 const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                const credential = error.credential;
-                console.log(errorCode, errorMessage, email, credential);
-                // ...
+                console.log(errorMessage);
             });
     }
 
@@ -101,36 +89,34 @@ const Login = () => {
                     const newUserInfo = { ...user };
                     newUserInfo.signedInUser = true;
                     newUserInfo.error = '';
+
                     setUser(newUserInfo);
                     updateUserName(user.displayName);
                     setLoggedInUser(newUserInfo);
                     history.replace(from);
                     console.log('user added successfully', res.user);
-                    // ...
                 })
                 .catch((error) => {
                     const newUserInfo = { ...user };
                     newUserInfo.signedInUser = false;
                     setUser(newUserInfo);
-                    const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log(errorCode, errorMessage);
-                    // ..
+                    console.log('error message', errorMessage);
                 });
         }
         if (!newUser && user.email && user.password) {
             firebase.auth().signInWithEmailAndPassword(user.email, user.password)
                 .then((res) => {
                     // Signed in
-                    const oldUserData = {...user};
+                    const oldUserData = { ...user };
                     oldUserData.error = ''; //For removing the error message when the user provides correct information for log in.
                     setUser(oldUserData);
+
                     const oldUserInfo = res.user;
                     oldUserInfo.signedInUser = true;
                     setLoggedInUser(oldUserInfo);
                     history.replace(from);
                     console.log('user info', res.user);
-                    // ...
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
@@ -185,7 +171,7 @@ const Login = () => {
 
                     {newUser ? <input type="submit" className="btn btn-primary" value='Create an account' /> : <input type="submit" className="btn btn-primary" value='Login' />}
 
-                    {newUser || <p style={{textAlign:'center'}} className='error'>{user.error}</p>} {/* Providing error validation if the user email and password do not match during login sessions*/}
+                    {newUser || <p style={{ textAlign: 'center' }} className='error'>{user.error}</p>} {/* Providing error validation if the user email and password do not match during login sessions*/}
 
                     <div style={{ textAlign: 'center' }}>
                         {newUser ?
@@ -199,7 +185,7 @@ const Login = () => {
                             </div>
                         }
                     </div>
-                    
+
                 </form>
 
                 <div className="d-grid gap-2 col-6 mx-auto">
