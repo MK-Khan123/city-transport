@@ -15,11 +15,11 @@ const Login = () => {
 
     const [user, setUser] = useState({
         signedInUser: false,
-        name: '',
+        displayName: '',
         email: '',
         password: ''
     });
-    console.log(user);
+
     const [newUser, setNewUser] = useState(true);
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const history = useHistory();
@@ -34,7 +34,6 @@ const Login = () => {
                 // The signed-in user info.
                 const user = result.user;
                 user.signedInUser = true;
-                console.log(user);
                 setLoggedInUser(user);
                 history.replace(from);
             }).catch((error) => {
@@ -59,7 +58,6 @@ const Login = () => {
                 // The signed-in user info.
                 const user = result.user;
                 user.signedInUser = true;
-                console.log(user);
                 setLoggedInUser(user);
                 history.replace(from);
             })
@@ -101,7 +99,8 @@ const Login = () => {
                     const newUserInfo = { ...user };
                     newUserInfo.signedInUser = true;
                     setUser(newUserInfo);
-                    updateUserName(user.name);
+                    updateUserName(user.displayName);
+                    setLoggedInUser(newUserInfo);
                     history.replace(from);
                     console.log('user added successfully', res.user);
                     // ...
@@ -116,13 +115,14 @@ const Login = () => {
                     // ..
                 });
         }
-        else if (!newUser && user.email && user.password) {
+        if (!newUser && user.email && user.password) {
             firebase.auth().signInWithEmailAndPassword(user.email, user.password)
                 .then((res) => {
                     // Signed in
                     const newUserInfo = { ...user };
                     newUserInfo.signedInUser = true;
                     setUser(newUserInfo);
+                    setLoggedInUser(newUserInfo);
                     history.replace(from);
                     console.log('user info', res.user);
                     // ...
@@ -158,7 +158,7 @@ const Login = () => {
                     {newUser &&
                         <div className="mb-3">
                             <label className="form-label">Name</label>
-                            <input name="name" type="text" onBlur={handleBlur} placeholder='Your Name' className="form-control" required />
+                            <input name="displayName" type="text" onBlur={handleBlur} placeholder='Your Name' className="form-control" required />
                         </div>}
 
                     <div className="mb-3">

@@ -29,7 +29,7 @@ function App() {
             <Route path='/login'>
               <Login />
             </Route>
-            <PrivateRoute path='/destination/:ride'>
+            <PrivateRoute path='/destination/:rideType'>
               <DestinationDetails />
             </PrivateRoute>
             <Route exact path='/'>

@@ -4,6 +4,7 @@ import { UserContext } from '../../App';
 
 const Header = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    console.log(loggedInUser);
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
@@ -17,7 +18,7 @@ const Header = () => {
                         <Link className="nav-link" to="/destination/motorcycle">Destination</Link>
                         <Link className="nav-link" to="/blog">Blog</Link>
                         <Link className="nav-link" to="/contact">Contact</Link>
-                        {loggedInUser.signedInUser && <Link className="nav-link" to='/home'>{loggedInUser.displayName}</Link>}
+                        {loggedInUser.signedInUser && <Link className="nav-link" to='/home'>{loggedInUser.email}</Link>}
                         {loggedInUser.signedInUser || <Link className="nav-link" to="/login">Login</Link>}
                     </div>
                 </div>
