@@ -45,11 +45,11 @@ const DestinationDetails = () => {
                             <input name='pickTo' onBlur={handleBlur} type="text" className="form-control" />
                         </div>
                         <div className="mb-3">
-                            <label className="form-label">Starting Date</label>
+                            <label className="form-label">Start Date</label>
                             <input name='start' type="date" className="form-control" />
                         </div>
                         <div className="mb-3">
-                            <label className="form-label">Ending Date</label>
+                            <label className="form-label">Return Date</label>
                             <input name='end' type="date" className="form-control" />
                         </div>
                         <button onClick={() => setShowDetails(!showDetails)} type="submit" className="btn btn-primary">Search</button>

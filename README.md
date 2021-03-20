@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Netlify Live Site Link
 
-The project was deployed at Netlify and you can access the link by clicking here [Netlify Live Site Link].
+The project was deployed at Netlify and you can access the link by clicking here [Netlify Live Site Link](https://practical-joliot-41cf3a.netlify.app/).
 
 ### `Project Features`
 
