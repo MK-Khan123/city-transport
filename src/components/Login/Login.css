@@ -3,11 +3,11 @@
     border: 1px solid black;
 }
 
-.error {
+.errorStyle {
     color: red;
 }
 
-.toggleLoginStyle {
+.toggleSignInStyle {
     text-decoration: underline;
     color: darkgreen;
     cursor: pointer;

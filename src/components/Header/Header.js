@@ -6,6 +6,7 @@ const Header = () => {
     const [loggedInUser] = useContext(UserContext);
 
     return (
+        // This is the navbar that remains at every page on top.
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/home">City Transport</Link>

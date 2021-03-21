@@ -15,7 +15,7 @@ const DestinationDetails = () => {
         pickFrom: '',
         pickTo: ''
     });
-    const [showDetails, setShowDetails] = useState(false);
+    const [showDetails, setShowDetails] = useState(false); //This useState is used to toggle between trip details input (Pick From, Pick To, Date of Trip) and displaying trip details (with dynamic ride logo and price).
 
     const handleBlur = (e) => {
         if (e.target.name === 'pickFrom') {
@@ -34,6 +34,8 @@ const DestinationDetails = () => {
     return (
         <div className='row' style={{ marginTop: '30px' }}>
             <div className='col-md-4'>
+                
+                {/* This part requires information from users about their trip details (Pick From, Pick To, Date of Trip) */}
                 {showDetails ||
                     <div>
                         <div className="mb-3">
@@ -55,6 +57,8 @@ const DestinationDetails = () => {
                         <button onClick={() => setShowDetails(!showDetails)} type="submit" className="btn btn-primary">Search</button>
                     </div>
                 }
+                
+                {/* This part displays the destination with dynamic ride logo and price of trip */}
                 {showDetails &&
                     <div>
                         <div className='destination-area'>
@@ -107,6 +111,8 @@ const DestinationDetails = () => {
                     </div>
                 }
             </div>
+            
+            {/* A static map image is placed instead of Google Map */}
             <div className='col-md-8'>
                 <img className='mapImage-style' src={mapImage} alt="..." />
             </div>

@@ -18,15 +18,23 @@ const Login = () => {
         displayName: '',
         email: '',
         password: '',
-        error: ''
+        error: '',
+        emailValidationError: ''
+    });
+    
+    //storePassword state is declared so that we can compare 'Provided Password' and 'Confirm Password' and display error validation message.
+    const [storePassword, setStorePassword] = useState({
+        password: '',
+        passwordValidationError: ''
     });
 
     const [newUser, setNewUser] = useState(true);
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext); //This state is used for Context API.
     const history = useHistory();
     const location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
     console.log(loggedInUser);
+    
 
     const googleSignIn = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -65,23 +73,65 @@ const Login = () => {
     }
 
     const handleBlur = (e) => {
-        let isFieldValid = true;
-        if (e.target.name === 'email') {
-            isFieldValid = /\S+@\S+\.\S+/.test(e.target.value);
-        }
-        else if (e.target.name === 'password') {
-            const isPasswordValid = e.target.value.length > 6;
-            const passwordHasNumber = /\d{1}/.test(e.target.value);
-            isFieldValid = isPasswordValid && passwordHasNumber;
-        }
-        if (isFieldValid) {
+
+        if (e.target.name === 'displayName') {
+            const name = e.target.value;
             const newUserInfo = { ...user };
-            newUserInfo[e.target.name] = e.target.value;
+            newUserInfo[e.target.name] = name;
             setUser(newUserInfo);
+        }
+        if (e.target.name === 'email') {
+            const email = e.target.value;
+            const isFieldValid = /\S+@\S+\.\S+/.test(email);
+            
+            if (isFieldValid) {
+                const newUserInfo = { ...user };
+                newUserInfo[e.target.name] = email;
+                newUserInfo.emailValidationError = '';
+                setUser(newUserInfo);
+            }
+            else {
+                const newUserInfo = { ...user };
+                newUserInfo.emailValidationError = 'Email format is not valid';
+                setUser(newUserInfo);
+            }
+
+        }
+        if (e.target.name === 'password') {
+            const password = e.target.value;
+            const isPasswordLong = password.length > 6;
+            const passwordHasNumber = /\d{1}/.test(password);
+            const isFieldValid = isPasswordLong && passwordHasNumber;
+
+            if (isFieldValid) {
+                const newUserInfo = { ...storePassword };
+                newUserInfo.password = password;
+                newUserInfo.passwordValidationError = '';
+                setStorePassword(newUserInfo);
+            }
+            else {
+                const newUserInfo = { ...storePassword };
+                newUserInfo.passwordValidationError = 'Please set your password accordingly. Minimum 6 characters with at least 1 numerical';
+                setStorePassword(newUserInfo);
+            }
+        }
+        if (e.target.name === 'confirmPassword') {
+            const confirmedPassword = e.target.value;
+            if (storePassword.password === confirmedPassword) {
+                const newUserInfo = { ...user };
+                newUserInfo.error = '';
+                newUserInfo.password = storePassword.password;
+                setUser(newUserInfo);
+            }
+            else {
+                const newUserInfo = { ...user };
+                newUserInfo.error = "Provided password and Confirmed password doesn't match !";
+                setUser(newUserInfo);
+            }
         }
     }
 
-    const emailSignIn = (e) => {
+    const submitEmailSignIn = (e) => {
         if (newUser && user.email && user.password) {
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
                 .then((res) => {
@@ -104,19 +154,19 @@ const Login = () => {
                     console.log('error message', errorMessage);
                 });
         }
-        if (!newUser && user.email && user.password) {
-            firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+        if (!newUser && user.email && storePassword.password) {
+            firebase.auth().signInWithEmailAndPassword(user.email, storePassword.password)
                 .then((res) => {
                     // Signed in
                     const oldUserData = { ...user };
-                    oldUserData.error = ''; //For removing the error message when the user provides correct information for log in.
+                    oldUserData.error = ''; //For removing the error message when the user provides correct information to log in.
                     setUser(oldUserData);
 
                     const oldUserInfo = res.user;
                     oldUserInfo.signedInUser = true;
                     setLoggedInUser(oldUserInfo);
                     history.replace(from);
-                    console.log('user info', res.user);
+                    console.log('existing user info', res.user);
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
@@ -129,6 +179,7 @@ const Login = () => {
         e.preventDefault();
     }
 
+    //updateUserName() is used because creating a new account doesn't require an username to be set. But we need to have an username to display it on our Navbar when a specific user logs in.
     const updateUserName = (name) => {
         const user = firebase.auth().currentUser;
         user.updateProfile({
@@ -144,43 +195,47 @@ const Login = () => {
         <div className='inputForm'>
             {newUser ? <h1>Create an account</h1> : <h1>Login</h1>}
             <div>
-                <form onSubmit={emailSignIn}>
+                <form onSubmit={submitEmailSignIn}>
                     {newUser &&
                         <div className="mb-3">
                             <label className="form-label">Name</label>
                             <input name="displayName" type="text" onBlur={handleBlur} placeholder='Your Name' className="form-control" required />
-                        </div>}
+                        </div>
+                    }
 
                     <div className="mb-3">
                         <label className="form-label">Email address</label>
                         <input name="email" type="email" onBlur={handleBlur} placeholder='Your Email' className="form-control" required />
                         <div className="form-text">We'll never share your email with anyone else.</div>
+                        <p style={{ textAlign: 'center' }} className='errorStyle'>{user.emailValidationError}</p> {/* Providing error message if the user email format is incorrect */}
                     </div>
 
                     <div className="mb-3">
                         <label className="form-label">Password</label>
                         <input name="password" type="password" onBlur={handleBlur} placeholder='minimum 6 characters with at least one numerical' className="form-control" required />
+                        <p style={{ textAlign: 'center' }} className='errorStyle'>{storePassword.passwordValidationError}</p> {/* Providing error message if the user sets the password without following the instruction */}
                     </div>
 
                     {newUser &&
                         <div className="mb-3">
                             <label className="form-label">Confirm Password</label>
-                            <input name="confirmPassword" type="password" placeholder='Confirm Your Password' className="form-control" required />
+                            <input name="confirmPassword" type="password" onBlur={handleBlur} placeholder='Confirm Your Password' className="form-control" required />
+                            <p style={{ textAlign: 'center' }} className='errorStyle'>{user.error}</p> {/* Providing error message if the provided password and confirm password do not match */}
                         </div>
                     }
 
                     {newUser ? <input type="submit" className="btn btn-primary" value='Create an account' /> : <input type="submit" className="btn btn-primary" value='Login' />}
 
-                    {newUser || <p style={{ textAlign: 'center' }} className='error'>{user.error}</p>} {/* Providing error validation if the user email and password do not match during login sessions*/}
+                    {newUser || <p style={{ textAlign: 'center' }} className='errorStyle'>{user.error}</p>} {/* Providing error message if the user email and password do not match during login sessions*/}
 
                     <div style={{ textAlign: 'center' }}>
                         {newUser ?
                             <div>
-                                <h6>Already have an account ? <span className='toggleLoginStyle' onClick={() => setNewUser(!newUser)}>Login</span></h6>
+                                <h6>Already have an account ? <span className='toggleSignInStyle' onClick={() => setNewUser(!newUser)}>Login</span></h6>
                                 <p>---------------------Or---------------------</p>
                             </div>
                             : <div>
-                                <h6>Don't have an account ? <span className='toggleLoginStyle' onClick={() => setNewUser(!newUser)}>Create an account</span></h6>
+                                <h6>Don't have an account ? <span className='toggleSignInStyle' onClick={() => setNewUser(!newUser)}>Create an account</span></h6>
                                 <p>---------------------Or---------------------</p>
                             </div>
                         }
