@@ -17,11 +17,11 @@ In this project, we practically applied the functional concepts of React Authent
 3. In addition, we used plain bootstrap to make the website device responsive. Furthermore, we deployed our site on Netlify which can be accessed through the above mentioned link to experience the website.
 
 Some screenshots of the project, 
-[Homepage](https://ibb.co/pKvyM67)
-[Create an Account](https://ibb.co/strTtqF)
-[Login page](https://ibb.co/xhmsxYS)
-[Destination input](https://ibb.co/4jrNNx0)
-[Destination details](https://ibb.co/X7SSq0c)
+[Homepage](https://ibb.co/pKvyM67),
+[Create an Account](https://ibb.co/strTtqF),
+[Login page](https://ibb.co/xhmsxYS),
+[Destination input](https://ibb.co/4jrNNx0),
+[Destination details](https://ibb.co/X7SSq0c).
 
 You can contact me through [LinkedIn](https://www.linkedin.com/in/mehnaz-ahmed-khan31/), [Twitter](https://twitter.com/MehnazAhmedKha1) or through my email (mehnazkhan231@gmail.com).
 
