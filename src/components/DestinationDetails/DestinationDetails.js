@@ -13,9 +13,9 @@ const DestinationDetails = () => {
 
     const [destination, setDestination] = useState({
         pickFrom: '',
-        pickTo: ''
+        dropAt: ''
     });
-    const [showDetails, setShowDetails] = useState(false); //This useState is used to toggle between trip details input (Pick From, Pick To, Date of Trip) and displaying trip details (with dynamic ride logo and price).
+    const [showDetails, setShowDetails] = useState(false); //This useState is used to toggle between trip details input (Pick From, Drop At, Date of Trip) and displaying trip details (with dynamic ride logo and price).
 
     const handleBlur = (e) => {
         if (e.target.name === 'pickFrom') {
@@ -23,7 +23,7 @@ const DestinationDetails = () => {
             newDestinationInfo[e.target.name] = e.target.value;
             setDestination(newDestinationInfo);
         }
-        if (e.target.name === 'pickTo') {
+        if (e.target.name === 'dropAt') {
             const newDestinationInfo = { ...destination };
             newDestinationInfo[e.target.name] = e.target.value;
             setDestination(newDestinationInfo);
@@ -35,7 +35,7 @@ const DestinationDetails = () => {
         <div className='row' style={{ marginTop: '30px' }}>
             <div className='col-md-4'>
                 
-                {/* This part requires information from users about their trip details (Pick From, Pick To, Date of Trip) */}
+                {/* This part requires information from users about their trip details (Pick From, Drop At, Date of Trip) */}
                 {showDetails ||
                     <div>
                         <div className="mb-3">
@@ -43,8 +43,8 @@ const DestinationDetails = () => {
                             <input name='pickFrom' onBlur={handleBlur} type="text" className="form-control" />
                         </div>
                         <div className="mb-3">
-                            <label className="form-label">Pick to</label>
-                            <input name='pickTo' onBlur={handleBlur} type="text" className="form-control" />
+                            <label className="form-label">Drop At</label>
+                            <input name='dropAt' onBlur={handleBlur} type="text" className="form-control" />
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Start Date</label>
@@ -63,7 +63,7 @@ const DestinationDetails = () => {
                     <div>
                         <div className='destination-area'>
                             <li>{destination.pickFrom}</li>
-                            <li>{destination.pickTo}</li>
+                            <li>{destination.dropAt}</li>
                         </div>
 
                         <div className="card mb-3" style={{ maxWidth: '540px', borderRadius: '10px' }}>
