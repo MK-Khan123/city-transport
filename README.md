@@ -35,7 +35,7 @@ In this project, I had the opportunity to practically apply the functional conce
 
 ![Login page](https://i.ibb.co/dBbc8t0/city-transport3.png)
 
-![Destination input](https://ibb.co/4jrNNx0)
+![Destination input](https://i.ibb.co/RDJW9fH/city-transport4.png)
 
 ![Destination details](https://i.ibb.co/gSzzxqk/city-transport5.png)
 
